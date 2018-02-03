@@ -1,0 +1,19 @@
+1. pip install Django==1.11.10
+User is giving instructions to pip to install a specific version of Django.
+
+2. pip list
+Lists installed packages, including things that can be edited.
+
+3. pip install Django==1.11.10
+
+3. pip freeze
+Output installed packages in requirements format. Packages are listed in case-sensitive sorted order. A file named requirements.txt is created.
+
+4. ls
+Lists the directory contents.
+
+5. pip uninstall Django
+
+6. pip show Django
+
+7. pip search Flask
