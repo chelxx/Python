@@ -13,7 +13,10 @@ Output installed packages in requirements format. Packages are listed in case-se
 Lists the directory contents.
 
 5. pip uninstall Django
+To uninstall packages, in this case, Django.
 
 6. pip show Django
+To show information about one or more installed packages.
 
 7. pip search Flask
+Search for PyPI packages whose name or summary contains <query>.
