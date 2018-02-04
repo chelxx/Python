@@ -1,9 +1,9 @@
 # Checkerboard Assignment
 
-for i in range (0, 9):
+for i in range (0, 8):
     if i % 2 == 0:
-        print ("* * * * * ")
+        print ("* * * * ")
     if i % 2 != 0:
-        print (" * * * * *")
+        print (" * * * *")
 
 # END
