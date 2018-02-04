@@ -4,7 +4,7 @@ import random
 heads = 0
 tails = 0
 toss = 0
-while toss < 10:
+while toss < 5001:
     cointoss = random.randint(0, 2)
     if cointoss == 0:
         tails = tails + 1
