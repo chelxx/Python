@@ -15,9 +15,9 @@ class Car(object):
         print ("Fuel: {}").format(self.fuel)
         print ("Mileage: {}").format(self.mileage)
         if self.price < 10000:
-            print ("Tax: 0.12")
+            print ("Tax: 12%")
         if self.price > 10000:
-            print ("Tax: 0.15")
+            print ("Tax: 15%")
         
 
 def display_all():
