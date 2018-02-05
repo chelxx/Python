@@ -8,24 +8,25 @@ class Bike(object):
         self.miles = miles
 
     def brand(self):
-        print("The bike's brand is {}.".format(self.name))
+        print("The bike's name is {}.".format(self.name))
 
     def cost(self):
-        print("The bike costs ${}".format(self.price))
+        print("The bike costs ${}.".format(self.price))
 
     def ride(self):
-        print("Adding... From {} mph, now it's {} mph! So fast!".format(self.speed, (self.speed + 10)))
+        print("Riding...").format(self.miles)
     
     def reverse(self):
-        print("Reducing... From {} miles, the current total is {} miles!".format(self.miles, (self.miles - 5)))
+        print("Reversing...").format(self.miles)
 
 def displayinfo():
-    schwinn = Bike("Schwinn", 100, 25, 100)
+    bike1 = Bike("Shirley", 100, 25, 50)
+    bike2 = Bike("Ron", 150, 20, 60)
 
-    schwinn.brand()
-    schwinn.cost()
-    schwinn.ride()
-    schwinn.reverse()
+    bike1.brand()
+    bike1.cost()
+    bike1.ride()
+    bike1.reverse()
 
 displayinfo()
 
