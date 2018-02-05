@@ -21,19 +21,12 @@ class Car(object):
         
 
 def display_all():
-    honda = Car("Honda", 2000, "Full", "10mph", "15mpg")
-    hyundai = Car("Hyundai", 4000, "Empty", "20mph", "25mpg")
-    nissan = Car("Nissan", 600, "Full", "30mph", "35mpg")
-    toyota = Car("Toyota", 800, "Empty", "40mph", "45mpg")
-    benz = Car("Mercedez Benz", 10000, "Full", "50mph", "55mpg")
-    lambo = Car("Lamborghini", 12000, "Empty", "60mph", "65mpg")
-
-    honda.information()
-    hyundai.information()
-    nissan.information()
-    toyota.information()
-    benz.information()
-    lambo.information()
+    honda = Car("Honda", 2000, "Full", "10mph", "15mpg").information()
+    hyundai = Car("Hyundai", 4000, "Empty", "20mph", "25mpg").information()
+    nissan = Car("Nissan", 600, "Full", "30mph", "35mpg").information()
+    toyota = Car("Toyota", 800, "Empty", "40mph", "45mpg").information()
+    benz = Car("Mercedez Benz", 10000, "Full", "50mph", "55mpg").information()
+    lambo = Car("Lamborghini", 12000, "Empty", "60mph", "65mpg").information()
 
 display_all()
 

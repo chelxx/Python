@@ -1,32 +1,29 @@
 # Bike Assignment
 
 class Bike(object):
-    def __init__(self, name, price, speed, miles):
+    def __init__(self, name, speed, miles):
         self.name = name
-        self.price = price
         self.speed = speed
         self.miles = miles
-
-    def brand(self):
-        print("The bike's name is {}.".format(self.name))
-
-    def cost(self):
-        print("The bike costs ${}.".format(self.price))
+    
+    def information(self):
+        print (self.name, self.speed, self.miles)
+        return self
 
     def ride(self):
-        print("Riding...").format(self.miles)
+        self.miles += 10
+        print(("Riding..."), self.miles)
+        return self
     
     def reverse(self):
-        print("Reversing...").format(self.miles)
+        self.miles -= 5
+        print(("Reversing..."), self.miles)
+        return self
 
 def displayinfo():
-    bike1 = Bike("Shirley", 100, 25, 50)
-    bike2 = Bike("Ron", 150, 20, 60)
-
-    bike1.brand()
-    bike1.cost()
-    bike1.ride()
-    bike1.reverse()
+    bike1 = Bike("Harry", 25, 50).information().ride().ride().ride().reverse()
+    bike2 = Bike("Ron", 20, 60).information().ride().ride().reverse().reverse()
+    bike3 = Bike("Hermione", 30, 70).information().reverse().reverse().reverse()
 
 displayinfo()
 
