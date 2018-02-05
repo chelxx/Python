@@ -2,7 +2,7 @@
 
 # Find and Replace
 words = "It's thanksgiving day. It's my birthday, too!"
-print words[18]
+print words.find('day')
 new_str = words.replace("day", "month", 1)
 print new_str
 
