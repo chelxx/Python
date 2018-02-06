@@ -2,6 +2,8 @@
 
 import random
 
+print ("Scores and Grades")
+
 for x in range (10):
     rand_num = random.randint(60, 101)
     if rand_num <= 100 and rand_num >= 90:
