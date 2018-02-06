@@ -1,4 +1,5 @@
 # Scores and Grades Assignments
+import random
 
 for x in range (10):
     rand_num = random.randint(60, 101)
