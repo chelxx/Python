@@ -17,8 +17,8 @@ def draw_stars():
     i = 0
     while i < len(x):
         if type(x[i]) is str:
-            x[i] = i * x[i][0]
-            print x[i]
+            x[i] = len(x[i]) * x[i][0]
+            print (x[i].lower())
         else:
             x[i] = x[i] * '*'
             print x[i]
