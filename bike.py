@@ -12,11 +12,15 @@ class Bike(object):
 
     def ride(self):
         self.miles += 10
+        if self.miles <= 0:
+            self.miles = 0
         print(("Riding..."), self.miles)
         return self
     
     def reverse(self):
         self.miles -= 5
+        if self.miles <= 0:
+            self.miles = 0
         print(("Reversing..."), self.miles)
         return self
 
