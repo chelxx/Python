@@ -40,7 +40,6 @@ def  main ():
     p8 = Patient(808, "Patient Eight", "Dust", 8)
     p9 = Patient(909, "Patient Nine", "Fire", 9)
     hospital = Hospital("Best Hospital Ever", 3).admit(p0).admit(p1).admit(p2).admit(p5).discharge("Patient Zero")
-    
 main()
 
 # END
