@@ -23,10 +23,10 @@ class Hospital(object):
         return self
 
     def discharge(self, name):
-        for pat in self.patients:
-            if pat['Name'] == name:
-                pat['Bed Number'] = None
-                self.patients.remove(pat)
+        for paciente in self.patients:
+            if paciente['Name'] == name:
+                paciente['Bed Number'] = None
+                self.patients.remove(paciente)
                 print ("Discharged {}! We'll see him soon enough!".format(name))
 
 def  main ():
