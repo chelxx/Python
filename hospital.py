@@ -25,7 +25,6 @@ class Hospital(object):
     def discharge(self, name):
         for paciente in self.patients:
             if paciente['Name'] == name:
-                paciente['Bed Number'] = None
                 self.patients.remove(paciente)
                 print ("Discharged {}! We'll see him soon enough!".format(name))
 
