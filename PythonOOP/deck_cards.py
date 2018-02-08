@@ -23,18 +23,5 @@ class Card(object):
         if (self.suit == 4):
             self.suit = "Club"
             print self.suit, self.value
-        if (self.value == 11):
-            self.value = "Jack"
-            print self.suit, self.value
-        if (self.value == 12):
-            self.value = "Queen"
-            print self.suit, self.value
-        if (self.value == 13):
-            self.value = "King"
-            print self.suit, self.value
-        if (self.value == 14):
-            self.value = "Ace"
-            print self.suit, self.value
 
 test = Deck()
-print test.cards
