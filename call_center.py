@@ -2,7 +2,7 @@
 
 import random
 
-class Call(object): #parent
+class Call(object): 
     def __init__ (self, unique_id, name, number, time, reason):
         self.unique_id = unique_id
         self.name = name
@@ -10,7 +10,7 @@ class Call(object): #parent
         self.time = time
         self.reason = reason
         
-    def basic_info(self): #method
+    def basic_info(self): 
         rand_num = random.randint (10000, 99999)
         print "Unique ID:", rand_num
         print ("Name: {}").format(self.name)
