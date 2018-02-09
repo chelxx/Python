@@ -7,6 +7,7 @@ def index():
 
 @app.route('/process', methods=['POST'])
 def process():
-    return render_template('process.html', name=request.form['name'])
+    print request.form['name']
+    return redirect('/')
 
 app.run(debug=True)
