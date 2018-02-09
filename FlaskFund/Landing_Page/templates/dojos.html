@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+       <title>Dojos</title>
+       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/style.css") }}">
+       <script type="text/javascript" src="{{ url_for('static', filename="js/script.js") }}"></script>
+    </head>
+        <h1>Ninja Form:</h1>
+        <form action='/dojos/new' method='post'>
+            Name:<input type='text' name='name'>
+            Email:<input type='text' name='email'>
+            <input id="submit" type='submit' value='Submit'>
+        </form>
+    </body>
+</html>

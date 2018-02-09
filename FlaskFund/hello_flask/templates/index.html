@@ -1,1 +1,12 @@
-Hello Flask!
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>hello_flask</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/my_stylesheet.css") }}">
+        <script type="text/javascript" src="{{ url_for('static', filename="js/my_script.js") }}"></script>
+    </head>
+    <body>
+        <h1>Hello Flask!</h1>
+        <p>My name is {{ name }}.</p>
+    </body>
+</html>

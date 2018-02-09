@@ -1,0 +1,23 @@
+* {
+    background-color: aliceblue;
+    width: 800px;
+}
+h1, h2 {
+    color: rgb(0, 63, 103);
+}
+h1#welcome {
+    font-size: 50px;
+}
+p {
+    color: teal;
+}
+input {
+    background-color: white;
+}
+#submit {
+    margin: 10px 0 0 0;
+    background-color: skyblue;
+}
+form {
+    margin: 10px;
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>My First Template</title>
+    </head>
+    <body>
+        <h1>My first Flask template with embedded Python!</h1>
+        <p>Phrase: {{ phrase }}.</p>
+        <p>Times: {{ times }}</p>
+        {% for x in range (0, times) %}
+        <p>{{ phrase }}</p>
+        {% endfor %}
+    </body>
+</html>
