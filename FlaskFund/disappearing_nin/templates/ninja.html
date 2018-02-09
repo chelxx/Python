@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Disappearing Ninja</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/style.css") }}">
+        <script type="text/javascript" src="{{ url_for('static', filename="js/script.js") }}"></script>
+    </head>
+    <body>
+        {% if pizzaparty == True %}
+            <img src="../static/img/tmnt.png" alt="TMNT">
+        {% endif %}
+        {% if pizzaparty == False %}
+            {% if color == 'blue' %}
+                <img src="../static/img/leonardo.jpg" alt="TMNT">
+            {% elif color == 'orange' %}
+                <img src="../static/img/michelangelo.jpg" alt="TMNT">
+            {% elif color == 'red' %}
+                <img src="../static/img/raphael.jpg" alt="TMNT">
+            {% elif color == 'purple' %}
+                <img src="../static/img/donatello.jpg" alt="TMNT">
+            {% else %}
+                <img src="../static/img/notapril.jpg" alt="TMNT">
+            {% endif %}
+        {% endif %}
+    </body>
+</html> 
