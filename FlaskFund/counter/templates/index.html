@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Counter</title>
+    </head>
+    <body>
+        <h1>Counter</h1>
+        <h2>{{ session['counter'] }} times.</h2>
+        <form action="/plustwo" method="post">
+            <button> +2 </button>
+        </form>
+        <form action="/reset" method="post">
+            <button> Reset to ZERO </button>
+        </form>
+    </body>
+</html>

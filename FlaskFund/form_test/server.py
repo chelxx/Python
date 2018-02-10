@@ -1,22 +1,21 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 app = Flask(__name__)
+app.secret_key = 'SecretKey'
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/users', methods=['POST'])
-def users():
+def create_user():
     print "Got Post Info"
-
-    name = request.form['name']
-    email = request.form['email']
-    
-    request.form['name']
-    request.form['email']
-
+    session['name'] = request.form['name']
+    session['email'] = request.form['email']
     print request.form
+    return redirect('/show')
 
-    return redirect('/')
+@app.route('/show')
+def show_user():
+    return render_template('user.html', name=session['name'], email=session['email'])
 
 app.run(debug=True)
