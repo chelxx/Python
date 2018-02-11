@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Dojo Survey Index</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/style.css") }}">
+        <script type="text/javascript" src="{{ url_for('static', filename="js/script.js") }}"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>Submitted Info:</h1>
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td>{{ session['name'] }}</td>
+                </tr>
+                <tr>
+                    <td>Dojo Location: </td>
+                    <td>{{ session['location'] }}</td>
+                </tr>
+                <tr>
+                    <td>Favorite Language: </td>
+                    <td>{{ session['language'] }}</td>
+                </tr>
+                <tr>
+                    <td>Comment: </td>
+                    <td>{{ request.form['comment'] }}</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

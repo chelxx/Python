@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>The Great Number Game</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/style.css") }}">
+    </head>
+    <body>
+        <h1>Welcome to the Great Number Game</h1>
+        <h2>I am thinking of a number between 1 and 100.</h2>
+        <h2>Take a guess!</h2>
+
+        <form action="/guess" method="post">
+            <input type="text" name="guess">
+            <input id="submit" type="submit" value="Submit">
+        </form>
+        {% if session['guess'] == random_num %}
+            <p>YOU GOT IT!</p>
+        {% else %}
+            <p>NOPE!</p>
+        {% endif %}
+    </body>
+</html>

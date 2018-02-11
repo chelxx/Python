@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    font-size: 200%;
+}
+input {
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(231, 170, 0);
+    text-align: center;
+    color: white;
+    font-size: 90%;
+}
+#submit {
+    background-color: rgb(231, 170, 0);
+    color: white;
+}
+
