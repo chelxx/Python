@@ -14,7 +14,7 @@ def dojos():
     print "Got Post Info"
     name = request.form['name']
     email = request.form['email']
-    request.form['name']
+    request.form['name']CXZert
     request.form['email']
     print request.form
     return render_template('dojos.html')
