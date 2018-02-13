@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Kill Kenny</title>
+    </head>
+    <body>
+        <h1>DO YOU WANNA GO TO SCHOOL?!</h1>
+        <h2>Total deaths: {{ session['deaths'] }}</h2>
+        <form action='/yes_dead'>
+            <a href="yes_dead.html"><input type='submit' value='YES???'></a>
+        </form>
+        <form action='/no_live'>
+            <a href="no_live.html"><input type='submit' value='NO!!!'></a>
+        </form>
+        <form action='/restart' method='post'>
+            <input type='submit' value='START OVER' name='restart'>
+        </form>
+    </body>
+</html>

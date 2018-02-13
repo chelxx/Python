@@ -11,8 +11,12 @@ input {
     color: white;
     font-size: 90%;
 }
-#submit {
+button {
     background-color: rgb(231, 170, 0);
     color: white;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
 }
+
 
