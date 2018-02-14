@@ -17,7 +17,7 @@ def ninja1():
 @app.route('/reset', methods=['POST'])
 def ninja2():
     if session['counter'] > 0:
-        session['counter'] = -1
+        session['counter'] = 0
     return redirect('/')
 
 app.run(debug=True)
