@@ -50,17 +50,3 @@ SELECT region, COUNT(name) as country_count
 FROM countries
 GROUP BY region
 ORDER BY country_count DESC;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
