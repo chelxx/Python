@@ -4,6 +4,9 @@
         <title></title>
     </head>
     <body>
-        <h1>Log in Successful!</h1>
+        <h1>Success! Welcome, {{ email }}!</h1>
+        <form action="/logout" method="post">
+            <input type="submit" value="LOGOUT">
+        </form>
     </body>
 </html>

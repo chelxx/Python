@@ -14,13 +14,16 @@ def index():
 @app.route('/register', methods=['POST']) #route for registering a user
 def register():
     error = []
-
+    if len(request.form['first_name']) <= 0 and len(request.fom['last_name']) <= 0:
+        error.append ('Name fields cannot be blank!')
     if not EMAIL_REGREX.match(request.form['email']):
         error.append ('Invalid Email Address!')
     if not NAME_REGREX.match(request.form['first_name']):
         error.append ('Invalid First Name!')
     if not NAME_REGREX.match(request.form['last_name']):
         error.append ('Invalid Last Name!')
+    if len(request.form['password']) < 8 and len(request.form['confirm_password']) < 8:
+        error.append ('Password should be at least eight(8) characters!')
     if request.form['confirm_password'] != request.form['password']:
         error.append ('Try again! Invalid Password Input!')
     if len(error) == 0:
@@ -55,9 +58,17 @@ def success():
         if not pswd == login[0]['hs_password']:
             logerror.append('Invalid Password!')
         if len(logerror) == 0:
+            session['logged_in'] = True
             return render_template('success.html', email=login[0]['email']) #for sending into html
     for i in logerror:
         flash(i)
     return redirect('/')
+    
+@app.route('/logout', methods=['POST'])
+def logout():
+    session['logged_in'] = False
+    flash('You have been LOGGED OUT!')
+    return redirect('/')
+
 
 app.run(debug=True)

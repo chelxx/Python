@@ -7,7 +7,7 @@
         <h1>Log In:</h1>
         <form action="/success" method="post">
             Email: <input type="text" name="logemail">
-            Password: <input type="text" name="logpassword">
+            Password: <input type="password" name="logpassword">
             <input type="submit" value="LOG IN">
         </form>
         <h1>Register:</h1>
@@ -15,8 +15,8 @@
             First Name: <input type="text" name="first_name">
             Last Name: <input type="text" name="last_name">
             Email: <input type="text" name="email">
-            Password: <input type="text" name="password">
-            Confirm Password: <input type="text" name="confirm_password">
+            Password: <input type="password" name="password">
+            Confirm Password: <input type="password" name="confirm_password">
             <input type="submit" value="REGISTER">
         </form>
         {% with messages = get_flashed_messages() %}
