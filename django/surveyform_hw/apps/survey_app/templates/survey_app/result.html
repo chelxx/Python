@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Survey Form Results HW</title>
+    </head>
+    <body>
+        <h1>Submitted Info:</h1>
+        <table>
+            <tr>
+                <td>Name: </td>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <td>Dojo Location: </td>
+                <td>{{ location }}</td>
+            </tr>
+            <tr>
+                <td>Favorite Language: </td>
+                <td>{{ language }}</td>
+            </tr>
+            <tr>
+                <td>Comment: </td>
+                <td>{{ comments }}</td>
+            </tr>
+        </table>
+        <form action="/back" method="post">
+            {% csrf_token %}
+            <button>GO BACK</button>
+        </form>
+    </body>
+</html>
