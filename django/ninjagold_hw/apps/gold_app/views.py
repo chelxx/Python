@@ -27,14 +27,14 @@ def process(request):
     if request.POST['hideme'] == 'cave':
         gamble = random.randrange (5, 11)
         request.session['gold_coins'] += gamble
-        update = "Earned " + str(gamble) + " gold coins from The Farm! (" + str(datetime.now().strftime('%Y/%m/%d %I:%M%p') + ")")
+        update = "Earned " + str(gamble) + " gold coins from The Cave! (" + str(datetime.now().strftime('%Y/%m/%d %I:%M%p') + ")")
         request.session['player_activities'].append(update)
         print ('I CLICKED ON CAVE')
         print update
     if request.POST['hideme'] == 'house':
         gamble = random.randrange (2, 6)
         request.session['gold_coins'] += gamble
-        update = "Earned " + str(gamble) + " gold coins from The Farm! (" + str(datetime.now().strftime('%Y/%m/%d %I:%M%p') + ")")
+        update = "Earned " + str(gamble) + " gold coins from The House! (" + str(datetime.now().strftime('%Y/%m/%d %I:%M%p') + ")")
         request.session['player_activities'].append(update)
         print ('I CLICKED ON HOUSE')
         print update
