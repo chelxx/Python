@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Session Words HW</title>
+    </head>
+    <body>
+        {{ response }}
+        <form action="/process" method="post">
+            {% csrf_token %}
+            <h1>Add a new word:</h1>
+            <input type="text" name="given_word">
+            <h3>Choose Color:</h3>
+            <input type="radio" value="Red" name="text_color">Red<br>
+            <input type="radio" value="Green" name="text_color">Green<br>
+            <input type="radio" value="Blue" name="text_color">Blue<br>
+            <input type="checkbox" value="Big" name="size">Show in BIG fonts!<bR><br>
+            <input type="submit" value="ADD TO SESSION">
+        </form>
+        <hr>
+        <form action="/reset" method="post">
+            {% csrf_token %}
+            <input type="submit" value="CLEAR SESSION">
+        </form>
+        <div>
+            <!-- PUT NEW WORDS HERE!!! -->
+            {% for hello in request.session.new_words %}
+                <p> {{ hello }} </p>
+            {% endfor %}
+        </div>
+    </body>
+</html>

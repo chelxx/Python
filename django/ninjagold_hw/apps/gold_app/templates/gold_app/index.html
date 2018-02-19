@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Ninja Gold HW</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="goldbar">
+                <h1>Your Poor Wallet: <span>{{ request.session.gold_coins }} gold coins</span></h1>
+            </div>
+            <div id="options">
+                <div class="gambler">
+                    <h2>Farm</h2>
+                    <h3>(earns 10-20 gold coins)</h3>
+                    <form action="/process_money" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="hideme" value="farm">
+                        <button>FIND GOLD!</button>
+                    </form>
+                </div>
+                <div class="gambler">
+                    <h2>Cave</h2>
+                    <h3>(earns 5-10 gold coins)</h3>
+                    <form action="/process_money" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="hideme" value="cave">
+                        <button>FIND GOLD!</button>
+                    </form>
+                </div>
+                <div class="gambler">
+                    <h2>House</h2>
+                    <h3>(earns 2-5 gold coins)</h3>
+                    <form action="/process_money" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="hideme" value="house">
+                        <button>FIND GOLD!</button>
+                    </form>
+                </div>
+                <div class="gambler">
+                    <h2>Casino</h2>
+                    <h3>(earns/takes 0-50 gold coins)</h3>
+                    <form action="/process_money" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="hideme" value="casino">
+                        <button>FIND GOLD!</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div id="activities">
+                <h3>Activities:</h3>
+                <div id="activities_scroll">
+                    <p>Womp! Womp!</p>
+                    {% for hello in request.session.player_activities %}
+                        <p> {{ hello }} </p>
+                    {% endfor %}
+                </div>
+                <form action="/reset" method="post">
+                    {% csrf_token %}
+                    <button>RESET</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
