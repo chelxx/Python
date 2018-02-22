@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Users Index</title>
+    </head>
+    <body>
+        <h1>Users</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created at</th>
+                <th>Actions</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.created_at }}</td>
+                    <td>
+                        <a href="{{ user.id }}/show">SHOW</a>
+                        <a href="{{ user.id }}/edit">EDIT</a>
+                        <a href="{{ user.id }}/destroy">DELETE</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <a href="/new">ADD A NEW USER</a>
+    </body>
+</html>

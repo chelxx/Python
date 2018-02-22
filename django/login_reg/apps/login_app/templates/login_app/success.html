@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SUCCESS</title>
+</head>
+<body>
+
+    <h1>Welcome, {{ user.first }}!</h1>
+    <h2 color="green">You have successfully registered (or logged in)!</h2>
+  
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</body>
+</html>
