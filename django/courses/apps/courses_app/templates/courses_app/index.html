@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Courses</title>
+</head>
+
+<body>
+    <h1>Add a New Course</h1>
+    <form action={% url "courses:index" %} method="post">
+        {% csrf_token %}
+        Course Name: <input type="text" name="course_name"><br>
+        Description: <textarea type="text" name="description"></textarea><br>
+        <button>Add</button>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif%}
+    <h1>Courses</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date added</th>
+
+            <th>Actions</th>
+        </tr>
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.id }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.description }} </td>
+            <td>{{ course.created_at }}</td>
+            <td><a href="destroy/{{ course.id }}">DELETE</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
