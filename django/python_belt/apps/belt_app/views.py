@@ -64,9 +64,13 @@ def success(request):
 def logout(request):
     print('LOGOUT VIEW')
     errors = []
-    print ('TRY - LOGOUT')
-    del request.session['user_id']
-    errors.append('You have been logged out! Bye, dude!')
+    try:
+        print ('TRY LOGOUT')
+        del request.session['user_id']
+        errors.append('You have been logged out! Bye, dude!')
+    except KeyError:
+        print ('EXCEPT LOGOUT')
+        pass    
     for error in errors:
         messages.error(request, error)
     return redirect('/')
