@@ -10,22 +10,29 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errors = []
-        if len(postData['first']) < 2:
+        # First Name Validations
+        if len(postData['first']) < 2: 
             errors.append("First name should be more than 2 characters")
         if not postData['first'].isalpha():
             errors.append("Name cannot contain numbers")
+
+        # Last Name Validation
         if len(postData['last']) < 2:
             errors.append("Last name should be more than 2 characters")
         if not postData['last'].isalpha():
-            errors.append("Name cannot contain numbers")
+            print 'wizard'
+
+        # Password Validation
         if len(postData['password']) < 8:
             errors.append("Password should be longer than 8 characters")
-        if len(postData['email']) < 0:
-            errors.append("Email must be filled out")
         if postData['password'] != postData['confirm_password']:
             errors.append("Password do not match")
+
+        #Email Validation
+        if len(postData['email']) < 0:
+            errors.append("Email must be filled out")
         if len(self.filter(email = postData['email'])) > 1:
-            errors.append('Email address is already in use') 
+            errors.append('Email address is already in use')
         return errors
 
 class User(models.Model):
