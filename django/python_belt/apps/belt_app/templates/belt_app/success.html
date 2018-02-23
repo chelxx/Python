@@ -4,19 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SUCCESS</title>
+    <title>HELLO</title>
 </head>
 <body>
 
     <h1>Welcome, {{ user.first }}!</h1>
-    <h2>You have successfully registered (or logged in)!</h2>
-  
     <form action="/logout" method="post">
         {% csrf_token %}
         <button>LOG OUT</button>
     </form>
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
+    <h2>Here are your appointments for today, {% now "M. d, Y" %}:</h2>
+    <!-- TABLE HERE -->
+    <table>
+        <tr>
+            <th>Tasks</th>
+            <th>Date</th>
+            <th>Time</th>
+            <!-- <th>Status</th> -->
+            <th>Action</th>
+        </tr>
+            {% for appointment in appointment %}
+                <tr>
+                    <td>{{ appointment.apptask }}</td>
+                    <td>{{ appointment.appdate }}</td>
+                    <td>{{ appointment.apptime }}</td>
+                    <!-- <td>{{ appointment.appstat }}</td> -->
+                    <td><a href="edit/{{ appointment.id }}">Edit</a>&emsp;<a href="delete/{{ appointment.id }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+    </table><br><br>
+
+<!-- TABLE FOR FUTURE APPOINTMENTS -->
+    <h2>Your Other Appointments: </h2>
+    <!-- <table>
+        <tr>
+            <th>Tasks</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for appointment in appointment %}
+            <tr>
+                <td>{{ appointment.apptask }}</td>
+                <td>{{ appointment.appdate }}</td>
+                <td>{{ appointment.apptime }}</td>
+                <td>{{ appointment.appstat }}</td>
+            </tr>
+        {% endfor %}
+    </table> -->
+    
+    <br>
+    <br>
+    <form action="/add" method="post">
+        {% csrf_token %}
+        Date: <input type="date" name="appdate"><br>
+        Time: <input type="time" name="apptime"><br>
+        Task: <input type="text" name="apptask"><br>
+        <button>ADD TASK</button><br><br>
+    </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><font color="red">{{ message }}</font></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

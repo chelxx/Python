@@ -39,7 +39,28 @@ class User(models.Model):
     last = models.CharField(max_length=255, default = 'blank')
     email = models.CharField(max_length=255, default = 'blank')
     password = models.CharField(max_length=255, default = 'blank')
+    birthday = models.DateField(auto_now=False, auto_now_add=False, default='blank')
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
     objects = UserManager()
+
+class AppointmentManager(models.Manager):
+    def appointment_validator(self, postData):
+        errors = []
+        if len(postData['appdate']) < 0:
+            errors.append('Date cannot be blank.')
+        if len(postData['apptime']) == None:
+            errors.append('Time cannot be blank.')
+        if len(postData['apptask']) < 0:
+            errors.append('Task Name cannot be blank.')
+        return errors
+
+class Appointment(models.Model):
+    appdate = models.DateField(auto_now=False, auto_now_add=False, default='blank')
+    apptime = models.TimeField(auto_now=False, auto_now_add=False, default='blank')
+    apptask = models.CharField(max_length=255, default = 'blank')
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    objects = AppointmentManager()
