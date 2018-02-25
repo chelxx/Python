@@ -13,30 +13,9 @@
         {% csrf_token %}
         <button>LOG OUT</button>
     </form>
-    <h2>Here are your appointments for today, {% now "M. d, Y" %}:</h2>
+    <h2>Here are your appointments for <font color="green">future</font>, {% now "M. d, Y" %}:</h2>
     <!-- TABLE HERE -->
-    <table>
-        <tr>
-            <th>Tasks</th>
-            <th>Date</th>
-            <th>Time</th>
-            <!-- <th>Status</th> -->
-            <th>Action</th>
-        </tr>
-            {% for appointment in appointment %}
-                <tr>
-                    <td>{{ appointment.apptask }}</td>
-                    <td>{{ appointment.appdate }}</td>
-                    <td>{{ appointment.apptime }}</td>
-                    <!-- <td>{{ appointment.appstat }}</td> -->
-                    <td><a href="edit/{{ appointment.id }}">Edit</a>&emsp;<a href="delete/{{ appointment.id }}">Delete</a></td>
-                </tr>
-            {% endfor %}
-    </table><br><br>
-
-<!-- TABLE FOR FUTURE APPOINTMENTS -->
-    <h2>Your Other Appointments: </h2>
-    <!-- <table>
+    <table cellspacing="10">
         <tr>
             <th>Tasks</th>
             <th>Date</th>
@@ -44,16 +23,43 @@
             <th>Status</th>
             <th>Action</th>
         </tr>
-        {% for appointment in appointment %}
-            <tr>
-                <td>{{ appointment.apptask }}</td>
-                <td>{{ appointment.appdate }}</td>
-                <td>{{ appointment.apptime }}</td>
-                <td>{{ appointment.appstat }}</td>
-            </tr>
+<!-- TABLE FOR TODAY'S APPOINTMENTS -->
+        {% for appointment in appointment %} 
+            {% if appointment.appdate == now %}
+                <tr>
+                    <td>{{ appointment.apptask }}</td>
+                    <td>{{ appointment.appdate }}</td>
+                    <td>{{ appointment.apptime }}</td>
+                    <td>{{ appointment.appstat }}</td>
+                    <td><a href="edit/{{ appointment.id }}">Edit</a>&ensp;<a href="delete/{{ appointment.id }}">Delete</a></td>
+                </tr>
+            {% endif %}
         {% endfor %}
-    </table> -->
-    
+        </table>
+        <br>
+        <br>
+<!-- TABLE FOR FUTURE APPOINTMENTS -->
+        <h2>Your <font color="green">future</font> appointments: </h2>
+        <table cellspacing="10">
+            <tr>
+                <th>Tasks</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        {% for appointment in appointment %}
+            {% if not appointment.appdate == now %}
+                <tr>
+                    <td>{{ appointment.apptask }}</td>
+                    <td>{{ appointment.appdate }}</td>
+                    <td>{{ appointment.apptime }}</td>
+                    <td>{{ appointment.appstat }}</td>
+                    <td><a href="edit/{{ appointment.id }}">Edit</a>&ensp;<a href="delete/{{ appointment.id }}">Delete</a></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
     <br>
     <br>
     <form action="/add" method="post">

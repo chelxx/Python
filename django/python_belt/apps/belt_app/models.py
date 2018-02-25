@@ -50,9 +50,10 @@ class AppointmentManager(models.Manager):
         errors = []
         if len(postData['appdate']) < 0:
             errors.append('Date cannot be blank.')
-        if len(postData['apptime']) == None:
+        if len(postData['apptime']) < 0:
             errors.append('Time cannot be blank.')
         if len(postData['apptask']) < 0:
+            print ('Task Name cannot be blank.')
             errors.append('Task Name cannot be blank.')
         return errors
 
@@ -60,6 +61,7 @@ class Appointment(models.Model):
     appdate = models.DateField(auto_now=False, auto_now_add=False, default='blank')
     apptime = models.TimeField(auto_now=False, auto_now_add=False, default='blank')
     apptask = models.CharField(max_length=255, default = 'blank')
+    appstat = models.CharField(max_length=255, default = 'Pending')
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 

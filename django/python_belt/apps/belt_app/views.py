@@ -58,7 +58,7 @@ def login(request):
 def success(request):
     print('SUCCESS VIEW')
     user = User.objects.get(id=request.session['user_id'])
-    appointment = Appointment.objects.all().order_by('appdate')
+    appointment = Appointment.objects.all().order_by('appdate', 'apptime')
     context = {
         'user' : user,
         'appointment' : appointment,
@@ -80,7 +80,6 @@ def logout(request):
         messages.error(request, error)
     return redirect('/')
 
-# EXAM :(
 def add(request):
     errors = Appointment.objects.appointment_validator(request.POST)
     if errors:
@@ -101,26 +100,28 @@ def edit(request, id):
     appointment = Appointment.objects.all()
     user = User.objects.get(id=request.session['user_id'])
     print ('EDIT FORM')
+    print appointment
+    print user
     context = {
         'user' : user,
-        'appointment' : appointment
+        'appointment' : appointment,
     }
     return render(request, 'belt_app/edit.html', context)
 
-def update(request, id): #?????
+def update(request, id): # NEEDS WORK
     appointment_list = Appointment.objects.filter(id=id)
     if len(appointment_list) > 0:
         appointment = appointment_list[0]
-        errors = Appointment.objects.validate(request.POST)
         if len(errors) > 0:
             for error in errors:
                 messages.error(request, error)
         else:
-            appointment.apptask = request.POST['apptask']
+            appointment.apptask = request.POST['appname']
+            appointment.appstat = request.POST['appstat']
             appointment.appdate = request.POST['appdate']
             appointment.apptime = request.POST['apptime']
             appointment.save()
-            return redirect('/success')
+        return redirect("/success")
 
 def delete(request, id):
     appointment = Appointment.objects.filter(id=id)
