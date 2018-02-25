@@ -13,7 +13,7 @@
         {% csrf_token %}
         <button>LOG OUT</button>
     </form>
-    <h2>Here are your appointments for <font color="green">future</font>, {% now "M. d, Y" %}:</h2>
+    <h2>Here are your appointments for <font color="green">today</font>, {% now "M. d, Y" %}:</h2>
     <!-- TABLE HERE -->
     <table cellspacing="10">
         <tr>
@@ -38,7 +38,6 @@
         </table>
         <br>
         <br>
-<!-- TABLE FOR FUTURE APPOINTMENTS -->
         <h2>Your <font color="green">future</font> appointments: </h2>
         <table cellspacing="10">
             <tr>
@@ -48,6 +47,7 @@
                 <th>Status</th>
                 <th>Action</th>
             </tr>
+<!-- TABLE FOR FUTURE APPOINTMENTS -->
         {% for appointment in appointment %}
             {% if not appointment.appdate == now %}
                 <tr>

@@ -97,11 +97,15 @@ def add(request):
     return redirect('/success')
 
 def edit(request, id):
-    appointment = Appointment.objects.all()
+    appointment = Appointment.objects.get(id=id)
     user = User.objects.get(id=request.session['user_id'])
     print ('EDIT FORM')
-    print appointment
+    print appointment.appdate
+    print appointment.apptask
+    print appointment.apptime #TIME NEEDS WORK. FORMATING?
     print user
+    print user.first
+    print id
     context = {
         'user' : user,
         'appointment' : appointment,
@@ -109,19 +113,29 @@ def edit(request, id):
     return render(request, 'belt_app/edit.html', context)
 
 def update(request, id): # NEEDS WORK
-    appointment_list = Appointment.objects.filter(id=id)
-    if len(appointment_list) > 0:
-        appointment = appointment_list[0]
-        if len(errors) > 0:
-            for error in errors:
-                messages.error(request, error)
-        else:
-            appointment.apptask = request.POST['appname']
-            appointment.appstat = request.POST['appstat']
-            appointment.appdate = request.POST['appdate']
-            appointment.apptime = request.POST['apptime']
-            appointment.save()
-        return redirect("/success")
+    print('UPDATE VIEW')
+    appointment = Appointment.objects.get(id=id)
+    appointment.apptask = request.POST['apptask']
+    appointment.appdate = request.POST['appdate']
+    appointment.apptime = request.POST['apptime']
+    appointment.save()
+    return redirect('/success')
+    
+    # appointment_list = Appointment.objects.filter(id=id)
+    # if len(appointment_list) > 0:
+    #     appointment = appointment_list[0]
+    #     print('IF - UPDATE')
+    #     print appointment
+    #     if len(errors) > 0:
+    #         for error in errors:
+    #             messages.error(request, error)
+    #     else:
+    #         appointment.apptask = request.POST['appname']
+    #         appointment.appstat = request.POST['appstat']
+    #         appointment.appdate = request.POST['appdate']
+    #         appointment.apptime = request.POST['apptime']
+    #         appointment.save()
+    #         return redirect("/success")
 
 def delete(request, id):
     appointment = Appointment.objects.filter(id=id)

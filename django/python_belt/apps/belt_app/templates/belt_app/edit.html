@@ -15,8 +15,9 @@
         <label>Status: <select name='appstat'>
                 <option value='pending'>Pending</option>
                 <option value='done#'>Done</option></select></label><br>
-        Date: <input type="date" name="appdate" value="{{ appointment.appdate }}"><br>
-        Time: <input type="time" name="apptime" value="{{ appointment.apptime }}"><br>
+        Date: <input type="date" name="appdate" value="{{ appointment.appdate|date:"Y-m-d" }}"><br>
+        Time: <input type="time" name="apptime" value="{{ appointment.apptime|time:"%H:%M %p" }}"><br>
+        <!-- TIME NEEDS WORK -->
         <button>UPDATE TASK</button><br><br>
     </form>
     <form action="/success">
