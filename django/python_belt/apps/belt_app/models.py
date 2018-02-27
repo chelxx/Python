@@ -50,7 +50,7 @@ class AppointmentManager(models.Manager):
     def appointment_validator(self, postData):
         errors = []
         curdate = unicode(datetime.datetime.now().date())
-        curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S'))
+        # curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S'))
         if len(postData['apptask']) < 1:
             print ('Task Name cannot be blank.')
             errors.append('Task Name cannot be blank.')
@@ -60,9 +60,9 @@ class AppointmentManager(models.Manager):
         if len(postData['apptime']) <= 0:
             print('You ain\'t no time traveler, son!')
             errors.append('You ain\'t no time traveler, son! *TIME*')
-        if postData['appdate'] == curdate and postData['apptime'] == curtime:
-            print('You ain\'t no time traveler, son!')
-            errors.append('Appointment already exists for that time, son!')
+        #Time Validations - prevents scheduling appointments at the same time/day
+        # if len(self.filter(apptime = postData['apptime'])) > 1 and len(self.filter(appdate = postData['appdate'])) > 1:
+        # errors.append('Appointment already exists for that time.')
         return errors
 
 class Appointment(models.Model):

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.contrib.messages import error
-from .models import *
+from .models import * #From Models import ALL
 from time import gmtime, strftime
 from datetime import datetime
 import bcrypt
