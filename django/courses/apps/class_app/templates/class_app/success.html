@@ -10,14 +10,22 @@
 
 <body>
     <h1>Welcome, {{ user.first }}!</h1>
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
     <h2>Add new course</h2>
     <form action='/create' method='POST'>
         {% csrf_token %}
         Name: <input type="text" name="course_name" value="{{ course.course_name }}"><br> 
-        Description: <textarea name="description"></textarea><br>
+        Description: <br><textarea name="description"></textarea><br><br>
         <button>ADD</button>
     </form>
-    <table>
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}><font color="red">{{ message }}</font></li>
+    {% endfor %}
+    <h2>All Courses:</h2>
+    <table cellspacing="10">
         <tr>
             <th>Course Name</th>
             <th>Description</th>
@@ -25,7 +33,7 @@
             <th>Actions</th>
             <th>Favorite</th>
         </tr>
-        {% for course in courses %}
+        {% for course in course %}
             <tr>
                 <td>{{ course.course_name }}</td>
                 <td>{{ course.description }}</td>
@@ -33,35 +41,27 @@
                 {% if not user.id == course.creator_id %}
                     <td>None</td>
                 {% else %}
-                    <td><a href="/delete/{{ course.id }}">remove</a></td>
+                    <td><a href="/delete/{{ course.id }}">Remove</a></td>
                 {% endif %}
+                <td><a href='/favorite/{{ course.id }}'>Fave!</a></td>
             </tr>
         {% endfor %}
     </table>
     <br>
     <h2>Favorite Courses: </h2>
-    <table>
+    <table cellspacing="10">
         <tr>
             <th>Course Name</th>
             <th>Description</th>
-            <th>UNFavorite</th>
+            <th>Favorite</th>
         </tr>
         {% for favorite in favorite %}
             <tr>
                 <td>{{ favorite.course_name }}</td>
                 <td>{{ favorite.description }}</td>          
-                <td><a href='/unfavorite/{{ favorite.id }}'>&#9760;</a></td>
+                <td><a href='/unfavorite/{{ favorite.id }}'>Unfave!</a></td>
             </tr>
         {% endfor %}
     </table>
-
-    <form action="/logout" method="post">
-        {% csrf_token %}
-        <button>LOG OUT</button>
-    </form>
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
 </body>
-
 </html>

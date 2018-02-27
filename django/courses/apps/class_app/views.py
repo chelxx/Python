@@ -59,12 +59,17 @@ def login(request):
 
 def logout(request):
     print('LOGOUT VIEW')
+    errors = []
     try:
         print ('TRY LOGOUT')
         del request.session['user_id']
+        request.session.clear()
+        errors.append('You have been logged out! Bye, dude!')
     except KeyError:
         print ('EXCEPT LOGOUT')
-        pass
+        pass    
+    for error in errors:
+        messages.error(request, error)
     return redirect('/')
 
 def create(request):
@@ -91,7 +96,7 @@ def success(request):
     favorite = user.userfave.all()
     context = {     
         'user' : user,
-        'courses' : course,
+        'course' : course,
         'favorite' : favorite 
     }
     return render(request, 'class_app/success.html', context)
