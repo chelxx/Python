@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <h1>Welcome, {{ user.first }}!</h1>
+    <h1>Welcome, {{ user.first }} {{ user.last }}!</h1>
     <form action="/logout" method="post">
         {% csrf_token %}
         <button>LOG OUT</button>
@@ -25,15 +25,17 @@
         </tr>
 <!-- TABLE FOR TODAY'S APPOINTMENTS -->
         {% for appointment in appointment %} 
-            {% if appointment.appdate == now %}
-                <tr>
-                    <td>{{ appointment.apptask }}</td>
-                    <td>{{ appointment.appdate }}</td>
-                    <td>{{ appointment.apptime }}</td>
-                    <td>{{ appointment.appstat }}</td>
+            <tr>
+                <td>{{ appointment.apptask }}</td>
+                <td>{{ appointment.appdate }}</td>
+                <td>{{ appointment.apptime }}</td>
+                <td>{{ appointment.appstat }}</td>
+                {% if not appointment.appstat == 'Pending' %}
+                    <td>None</td>
+                {% else %}
                     <td><a href="edit/{{ appointment.id }}">Edit</a>&ensp;<a href="delete/{{ appointment.id }}">Delete</a></td>
-                </tr>
-            {% endif %}
+                {% endif%}
+            </tr>
         {% endfor %}
         </table>
         <br>
@@ -48,16 +50,18 @@
                 <th>Action</th>
             </tr>
 <!-- TABLE FOR FUTURE APPOINTMENTS -->
-        {% for appointment in appointment %}
-            {% if not appointment.appdate == now %}
-                <tr>
-                    <td>{{ appointment.apptask }}</td>
-                    <td>{{ appointment.appdate }}</td>
-                    <td>{{ appointment.apptime }}</td>
-                    <td>{{ appointment.appstat }}</td>
-                    <td><a href="edit/{{ appointment.id }}">Edit</a>&ensp;<a href="delete/{{ appointment.id }}">Delete</a></td>
-                </tr>
-            {% endif %}
+        {% for appointment1 in appointment1 %}
+            <tr>
+                <td>{{ appointment1.apptask }}</td>
+                <td>{{ appointment1.appdate }}</td>
+                <td>{{ appointment1.apptime }}</td>
+                <td>{{ appointment1.appstat }}</td>
+                {% if not appointment1.appstat == 'Pending' %}
+                    <td>None</td>
+                {% else %}
+                    <td><a href="edit/{{ appointment1.id }}">Edit</a>&ensp;<a href="delete/{{ appointment1.id }}">Delete</a></td>
+                {% endif%}            
+            </tr>
         {% endfor %}
     </table>
     <br>

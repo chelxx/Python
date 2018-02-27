@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+import datetime
 import re
 import bcrypt
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -48,21 +49,24 @@ class User(models.Model):
 class AppointmentManager(models.Manager):
     def appointment_validator(self, postData):
         errors = []
-        if len(postData['appdate']) < 0:
-            errors.append('Date cannot be blank.')
-        if len(postData['apptime']) < 0:
-            errors.append('Time cannot be blank.')
-        if len(postData['apptask']) < 0:
+        curdate = unicode(datetime.datetime.now().date())
+        if len(postData['apptask']) < 1:
             print ('Task Name cannot be blank.')
             errors.append('Task Name cannot be blank.')
+        if postData['appdate'] < curdate:
+            print('Are you a time traveler?')
+            errors.append('Are you a time traveler?')
         return errors
 
 class Appointment(models.Model):
-    appdate = models.DateField(auto_now=False, auto_now_add=False, default='blank')
-    apptime = models.TimeField(auto_now=False, auto_now_add=False, default='blank')
+    appdate = models.DateField(auto_now=False, auto_now_add=False)
+    apptime = models.TimeField(auto_now=False, auto_now_add=False)
     apptask = models.CharField(max_length=255, default = 'blank')
     appstat = models.CharField(max_length=255, default = 'Pending')
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+    creator = models.ForeignKey(User, related_name="userappts")
+
     objects = AppointmentManager()
+

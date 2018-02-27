@@ -16,7 +16,7 @@ def index(request):
 def register(request):
     print ('REGISTER VIEW')
     errors = User.objects.basic_validator(request.POST)
-    if errors:
+    if len(errors):
         print ('IF - REGISTER')
         for error in errors:
             messages.error(request, error)
@@ -30,6 +30,7 @@ def register(request):
             password = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),
             birthday = request.POST['birthday'],
         ) 
+        request.session['user_id'] = user.id
         context = {
             'user' : user
         }
@@ -52,17 +53,20 @@ def login(request):
         errors.append('Email does not exist!')
     for error in errors:
         messages.error(request, error)
-    return redirect('/')
-    
+    return redirect('/')   
 
 def success(request):
     print('SUCCESS VIEW')
     user = User.objects.get(id=request.session['user_id'])
-    appointment = Appointment.objects.all().order_by('appdate', 'apptime')
+    today = datetime.datetime.now().date()
+    appointment = Appointment.objects.filter(creator=user).filter(appdate=today).order_by('appdate', 'apptime')
+    appointment1 = Appointment.objects.filter(creator=user).exclude(appdate=today).order_by('appdate', 'apptime')
     context = {
         'user' : user,
         'appointment' : appointment,
+        'appointment1' : appointment1,
     }
+    print appointment
     return render(request, 'belt_app/success.html', context)
 
 def logout(request):
@@ -89,53 +93,56 @@ def add(request):
         return redirect('/success')
     else:
         print ('ELSE - ADD')
+        user = User.objects.get(id=request.session['user_id'])
         appointment = Appointment.objects.create(
             appdate = request.POST['appdate'],
             apptime = request.POST['apptime'],
-            apptask = request.POST['apptask']
+            apptask = request.POST['apptask'],
+            creator = user,
         )
     return redirect('/success')
 
 def edit(request, id):
     appointment = Appointment.objects.get(id=id)
     user = User.objects.get(id=request.session['user_id'])
-    print ('EDIT FORM')
-    print appointment.appdate
-    print appointment.apptask
-    print appointment.apptime #TIME NEEDS WORK. FORMATING?
-    print user
-    print user.first
-    print id
+    # errors = Appointment.objects.appointment_validator(request.POST)
+    # print ('EDIT FORM')
+    # if errors:
+    #     print ('IF - EDIT')
+    #     for error in errors:
+    #         messages.error(request, error)
+    #     return redirect('/edit/{{ appointment.id }}')
+    # else: 
+    #     print ('ELSE - EDIT')
+    #     context = {
+    #         'user' : user,
+    #         'appointment' : appointment,
+    #     }
+    #     return render(request, 'belt_app/edit.html', context)
+    print ('ELSE - EDIT')
     context = {
         'user' : user,
         'appointment' : appointment,
     }
     return render(request, 'belt_app/edit.html', context)
 
-def update(request, id): # NEEDS WORK
+def update(request, id):
     print('UPDATE VIEW')
-    appointment = Appointment.objects.get(id=id)
-    appointment.apptask = request.POST['apptask']
-    appointment.appdate = request.POST['appdate']
-    appointment.apptime = request.POST['apptime']
-    appointment.save()
-    return redirect('/success')
-    
-    # appointment_list = Appointment.objects.filter(id=id)
-    # if len(appointment_list) > 0:
-    #     appointment = appointment_list[0]
-    #     print('IF - UPDATE')
-    #     print appointment
-    #     if len(errors) > 0:
-    #         for error in errors:
-    #             messages.error(request, error)
-    #     else:
-    #         appointment.apptask = request.POST['appname']
-    #         appointment.appstat = request.POST['appstat']
-    #         appointment.appdate = request.POST['appdate']
-    #         appointment.apptime = request.POST['apptime']
-    #         appointment.save()
-    #         return redirect("/success")
+    errors = Appointment.objects.appointment_validator(request.POST)
+    if errors:
+        print ('IF - UPDATE')
+        for error in errors:
+            messages.error(request, error)
+        return redirect('/edit/{{ appointment.id }}')
+    else:
+        print ('ELSE - UPDATE')
+        appointment = Appointment.objects.get(id=id)
+        appointment.apptask = request.POST['apptask']
+        appointment.appstat = request.POST['appstat']
+        appointment.appdate = request.POST['appdate']
+        appointment.apptime = request.POST['apptime']
+        appointment.save()
+        return redirect('/success')
 
 def delete(request, id):
     appointment = Appointment.objects.filter(id=id)

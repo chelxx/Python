@@ -7,14 +7,14 @@
     <title>EDIT</title>
 </head>
 <body>
-    <h1>Hello, {{ user.first }}!</h1>
-    <h2>Edit your task here: </h2>
-    <form action="/update" method="post">
+    <h1>Hello, {{ user.first }} {{ user.last }}!</h1>
+    <h2>Edit task #{{ appointment.id }} here: </h2>
+    <form action="/update/{{ appointment.id }}" method="post">
         {% csrf_token %}
         Task: <input type="text" name="apptask" value="{{ appointment.apptask }}"><br>
         <label>Status: <select name='appstat'>
-                <option value='pending'>Pending</option>
-                <option value='done#'>Done</option></select></label><br>
+                <option value='Pending'>Pending</option>
+                <option value='Done'>Done</option></select></label><br>
         Date: <input type="date" name="appdate" value="{{ appointment.appdate|date:"Y-m-d" }}"><br>
         Time: <input type="time" name="apptime" value="{{ appointment.apptime|time:"%H:%M %p" }}"><br>
         <!-- TIME NEEDS WORK -->
