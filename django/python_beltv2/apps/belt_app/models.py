@@ -29,8 +29,6 @@ class UserManager(models.Manager):
             errors.append('Password do not match.')
 
         #Email Validation
-        if len(postData['email']) < 0:
-            errors.append("Email must be filled out.")
         if len(self.filter(email = postData['email'])) > 1:
             errors.append('Email address is already in use.')
         return errors
@@ -46,33 +44,4 @@ class User(models.Model):
 
     objects = UserManager()
 
-class AppointmentManager(models.Manager):
-    def appointment_validator(self, postData):
-        errors = []
-        curdate = unicode(datetime.datetime.now().date())
-        # curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S'))
-        if len(postData['apptask']) < 1:
-            print ('Task Name cannot be blank.')
-            errors.append('Task Name cannot be blank.')
-        if postData['appdate'] < curdate:
-            print('You ain\'t no time traveler, son!')
-            errors.append('You ain\'t no time traveler, son! *DATE*')
-        if len(postData['apptime']) <= 0:
-            print('You ain\'t no time traveler, son!')
-            errors.append('You ain\'t no time traveler, son! *TIME*')
-        #Time Validations - prevents scheduling appointments at the same time/day
-        # if len(self.filter(apptime = postData['apptime'])) > 1 and len(self.filter(appdate = postData['appdate'])) > 1:
-        # errors.append('Appointment already exists for that time.')
-        return errors
-
-class Appointment(models.Model):
-    appdate = models.DateField(auto_now=False, auto_now_add=False)
-    apptime = models.TimeField(auto_now=False, auto_now_add=False)
-    apptask = models.CharField(max_length=255, default = 'blank')
-    appstat = models.CharField(max_length=255, default = 'Pending')
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-
-    creator = models.ForeignKey(User, related_name="userappts")
-
-    objects = AppointmentManager()
+#MODELS FOR BELT EXAM HERE:
