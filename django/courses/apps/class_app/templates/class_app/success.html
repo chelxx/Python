@@ -9,84 +9,49 @@
 </head>
 
 <body>
-
-
-
-    <!-- {{ currentdate }} -->
-
     <h1>Welcome, {{ user.first }}!</h1>
     <h2>Add new course</h2>
-    <form action='create' method='POST'>
-        {% csrf_token %} Name:
-        <input type="text" name="courseName" value="{{ course.courseName }}"><br> Description:
-        <textarea name="description"></textarea>
-        <br>
-
-        <button>add</button>
-
+    <form action='/create' method='POST'>
+        {% csrf_token %}
+        Name: <input type="text" name="course_name" value="{{ course.course_name }}"><br> 
+        Description: <textarea name="description"></textarea><br>
+        <button>ADD</button>
     </form>
-
     <table>
         <tr>
             <th>Course Name</th>
             <th>Description</th>
             <th>Date Added</th>
-
             <th>Actions</th>
             <th>Favorite</th>
         </tr>
-        <tr>
-            {% for course in courses %}
-
-            <td> {{ course.courseName }} </td>
-            <td>{{ course.description }}</td>
-            <td>{{ course.created_at }}</td>
-
-            <td>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.created_at }}</td>
                 {% if not user.id == course.creator_id %}
-                <td>
-                    <p>...</p>
-                </td>
+                    <td>None</td>
                 {% else %}
-
-                <a href="/delete/{{ course.id }}">remove</a>
-            </td>
-
-            {% endif %}
-            <td><a href='favorite/{{ course.id }}'>&hearts;</a></td>
-
-        </tr>
+                    <td><a href="/delete/{{ course.id }}">remove</a></td>
+                {% endif %}
+            </tr>
         {% endfor %}
-
     </table>
     <br>
-    <br>
-    <br>
-
-
-
-    <h2>Favorite courses</h2>
+    <h2>Favorite Courses: </h2>
     <table>
         <tr>
-            <th>Course name</th>
+            <th>Course Name</th>
             <th>Description</th>
-            <th>Date</th>
             <th>UNFavorite</th>
         </tr>
-        <tr>
-            {% for favorite in favorite %}
-
-            <td> {{ favorite.courseName }} </td>
-            <td>{{ favorite.description }}</td>
-            <td>{{ favorite.created_at }}</td>
-            <td>
-              
-            <td>
-                <a href='/unfavorite/{{ favorite.id }}'>&#9760;</a>
-
-                 </td>
-        </tr>
-
+        {% for favorite in favorite %}
+            <tr>
+                <td>{{ favorite.course_name }}</td>
+                <td>{{ favorite.description }}</td>          
+                <td><a href='/unfavorite/{{ favorite.id }}'>&#9760;</a></td>
+            </tr>
         {% endfor %}
     </table>
 

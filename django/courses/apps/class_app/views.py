@@ -58,7 +58,7 @@ def login(request):
     return redirect('/')
 
 def logout(request):
-    print('YOU IS LOGGED OUT BITCH')
+    print('LOGOUT VIEW')
     try:
         print ('TRY LOGOUT')
         del request.session['user_id']
@@ -68,8 +68,8 @@ def logout(request):
     return redirect('/')
 
 def create(request):
-    errors = Course.objects.validator(request.POST)
-
+    print('CREATE VIEW')
+    errors = Course.objects.course_validator(request.POST)
     if len(errors):
         for error in errors:
             messages.error(request, error)
@@ -78,10 +78,9 @@ def create(request):
         user = User.objects.get(id=request.session['user_id'])
         course = Course.objects.create(   
         description = request.POST['description'],
-        courseName = request.POST['courseName'],
+        course_name = request.POST['course_name'],
         creator = user
         )
- 
         return redirect('/success')
 
 def success(request):
@@ -90,59 +89,41 @@ def success(request):
     user = User.objects.get(id=request.session['user_id'])
     course = Course.objects.all()
     favorite = user.userfave.all()
-    
-    context = {
-        
+    context = {     
         'user' : user,
         'courses' : course,
-        'favorite' : favorite
-
-        
+        'favorite' : favorite 
     }
     return render(request, 'class_app/success.html', context)
 
-
 def edit(request, id):
-
     user = User.objects.get(id=request.session['user_id'])
     course = Course.objects.get(id=id) 
-    context = {
-        
-        
+    context = {    
         'user' : user,
         'appoint' : appoint,
-        }
-    print course.id
+    }
     return render(request, 'class_app/edit.html', context)
 
-
 def update(request, id):
-    errors = Course.objects.validator(request.POST)
+    errors = Course.objects.course_validator(request.POST)
     if errors:
         for error in errors.iteritems():
             messages.error(request, error)
         return redirect('/edit')
-
     else:
         course = Course.objects.get(id = id)
         course.description = request.POST['description']
-        course.courseName = request.POST['courseName']
-       
+        course.course_name = request.POST['course_name']
         course.save()
-
-
-    return redirect('/success')
+        return redirect('/success')
 
 def delete(request, id):
     course = Course.objects.filter(id=id)[0]
     user = User.objects.get(id=request.session['user_id'])
     context = {
-        
-        
         'course' : course,
-
-        }
-
+    }
     return render(request, 'class_app/delete.html', context)
 
 def favorite(request, id):
@@ -150,9 +131,6 @@ def favorite(request, id):
     user = User.objects.get(id=request.session['user_id'])
     course1.favorites.add(user)
     course1.save()
-
-
-    
     return redirect('/success')
 
 def unfavorite(request, id):
@@ -160,12 +138,10 @@ def unfavorite(request, id):
     user = User.objects.get(id=request.session['user_id'])
     course1.favorites.remove(user)
     course1.save()
-
     return redirect('/success')
 
-
 def destroy(request, id):
-    print "delete is working"
+    print('DESTROY VIEW')
     course = Course.objects.filter(id=id)
     course.delete()
     return redirect('/success')

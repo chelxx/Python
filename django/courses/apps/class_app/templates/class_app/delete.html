@@ -8,19 +8,19 @@
 </head>
 <body>
     <h1>Are you sure you want to delete the following course?</h1>
-    <p>Course Name: {{ course.courseName }} </p>
+    <p>Course Name: {{ course.course_name }} </p>
     <p>Description: {{ course.description }} </p>
 
     <form action='/success'  method="post">
         {% csrf_token %}
     
-        <button>No</button>
+        <button>NO</button>
     </form>
 
     <form action='destroy/{{ course.id }}' method="post">
         {% csrf_token %}
     
-        <button>Yes! I want to delete this</button>
+        <button>Yes, I want to delete this!</button>
     </form>
 </body>
 </html>

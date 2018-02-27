@@ -9,7 +9,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 # Create your models here.
 class UserManager(models.Manager):
-    def basic_validator(self, postData):
+    def basic_validator(self, postData): #Does all the validations for the Login/Registration
         errors = []
         # First Name Validations
         if len(postData['first']) < 2: 
@@ -46,30 +46,24 @@ class User(models.Model):
 
     objects = UserManager()
 
-
 class CourseManager(models.Manager):
-    def validator(self, postData):
-
+    def course_validator(self, postData): #Does all the validations for the Course
         errors = []
-        
-
-  
-        
+        #Description Validation
         if len(postData['description']) < 15:
-            errors.append("Description must be filled out")
+            errors.append("Description must be more than 15 characters.")
 
+        #Course Name Validation
         if len(postData['courseName']) < 5:
-            errors.append("Course name must be filled out")
-   
+            errors.append("Course name must be more than 5 characters.")
         return errors
 
 class Course(models.Model):
     description = models.CharField(max_length=255)
-    courseName = models.CharField(max_length=255)
-    
-    
+    course_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     creator = models.ForeignKey(User, related_name ="userappts")
-    favorites = models.ManyToManyField(User, related_name ="userfave")
+    favorites = models.ManyToManyField(User, related_name ="userfave") #Many to Many Relationship
+
     objects = CourseManager()
