@@ -18,7 +18,7 @@
         <button>REGISTER</button>
     </form>
     <h1>Log In</h1>
-    <form action={% url "courses:index" %} method="post">
+    <form action="/login" method="post">
         {% csrf_token %}
         Email: <input type="email" name="email"><br>
         Password: <input type="password" name="password"><br>

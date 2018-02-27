@@ -8,8 +8,8 @@
         <form action="/{{ user.id }}/update" method="post">
             {% csrf_token %}
             First Name: <input type="text" name="first_name" value="{{ user.first_name }}">
-            Last Name: <input type="text" name="last_name">
-            Email: <input type="email" name="email">
+            Last Name: <input type="text" name="last_name" value="{{ user.last_name }}">
+            Email: <input type="email" name="email" value="{{ user.email }}">
             <button>UPDATE</button>
         </form>
         {% if messages %}

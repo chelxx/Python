@@ -59,18 +59,17 @@ def destroy(request, id): #The id is needed to attach to the URL to keep track o
     user.delete() #User with the id is deleted
     return redirect('/') #Goes back to index.html once successful
 
-def update(request):
-#THIS DOES NOT WORK...
+def update(request, id):
     errors = User.objects.basic_validator(request.POST)
     if len(errors):
         print ('UPDATE IF PATH')
         for error in errors.iteritems():
             messages.error(request, error)
-        return redirect('edit/'.format(id))
     else:
         print ('UPDATE ELSE PATH')
         user = User.objects.get(id = id)
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
         user.email = request.POST['email']
-        return redirect('/')
+        user.save()
+        return redirect('show/')

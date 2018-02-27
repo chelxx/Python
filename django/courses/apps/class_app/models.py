@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-
-
-# Create your models here.
 from __future__ import unicode_literals
 
 from django.db import models
 import re
 import bcrypt
+import datetime
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 # Create your models here.
@@ -47,3 +45,31 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
     objects = UserManager()
+
+
+class CourseManager(models.Manager):
+    def validator(self, postData):
+
+        errors = []
+        
+
+  
+        
+        if len(postData['description']) < 15:
+            errors.append("Description must be filled out")
+
+        if len(postData['courseName']) < 5:
+            errors.append("Course name must be filled out")
+   
+        return errors
+
+class Course(models.Model):
+    description = models.CharField(max_length=255)
+    courseName = models.CharField(max_length=255)
+    
+    
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    creator = models.ForeignKey(User, related_name ="userappts")
+    favorites = models.ManyToManyField(User, related_name ="userfave")
+    objects = CourseManager()

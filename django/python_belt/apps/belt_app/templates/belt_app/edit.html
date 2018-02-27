@@ -16,12 +16,19 @@
                 <option value='Pending'>Pending</option>
                 <option value='Done'>Done</option></select></label><br>
         Date: <input type="date" name="appdate" value="{{ appointment.appdate|date:"Y-m-d" }}"><br>
-        Time: <input type="time" name="apptime" value="{{ appointment.apptime|time:"%H:%M %p" }}"><br>
+        Time: <input type="time" name="apptime" value="{{ appointment.apptime|time }}"><br>
         <!-- TIME NEEDS WORK -->
         <button>UPDATE TASK</button><br><br>
     </form>
     <form action="/success">
         <button>GO BACK</button>
     </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><font color="red">{{ message }}</font></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

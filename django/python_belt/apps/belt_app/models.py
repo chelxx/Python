@@ -50,12 +50,19 @@ class AppointmentManager(models.Manager):
     def appointment_validator(self, postData):
         errors = []
         curdate = unicode(datetime.datetime.now().date())
+        curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S'))
         if len(postData['apptask']) < 1:
             print ('Task Name cannot be blank.')
             errors.append('Task Name cannot be blank.')
         if postData['appdate'] < curdate:
-            print('Are you a time traveler?')
-            errors.append('Are you a time traveler?')
+            print('You ain\'t no time traveler, son!')
+            errors.append('You ain\'t no time traveler, son! *DATE*')
+        if len(postData['apptime']) <= 0:
+            print('You ain\'t no time traveler, son!')
+            errors.append('You ain\'t no time traveler, son! *TIME*')
+        if postData['appdate'] == curdate and postData['apptime'] == curtime:
+            print('You ain\'t no time traveler, son!')
+            errors.append('Appointment already exists for that time, son!')
         return errors
 
 class Appointment(models.Model):

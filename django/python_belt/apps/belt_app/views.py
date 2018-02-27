@@ -66,7 +66,6 @@ def success(request):
         'appointment' : appointment,
         'appointment1' : appointment1,
     }
-    print appointment
     return render(request, 'belt_app/success.html', context)
 
 def logout(request):
@@ -103,27 +102,17 @@ def add(request):
     return redirect('/success')
 
 def edit(request, id):
+    # curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S %p'))
+    curtime = unicode(datetime.datetime.now().strftime('%I:%M:%S'))
     appointment = Appointment.objects.get(id=id)
     user = User.objects.get(id=request.session['user_id'])
-    # errors = Appointment.objects.appointment_validator(request.POST)
-    # print ('EDIT FORM')
-    # if errors:
-    #     print ('IF - EDIT')
-    #     for error in errors:
-    #         messages.error(request, error)
-    #     return redirect('/edit/{{ appointment.id }}')
-    # else: 
-    #     print ('ELSE - EDIT')
-    #     context = {
-    #         'user' : user,
-    #         'appointment' : appointment,
-    #     }
-    #     return render(request, 'belt_app/edit.html', context)
     print ('ELSE - EDIT')
     context = {
         'user' : user,
         'appointment' : appointment,
     }
+    print curtime
+    print appointment.apptime
     return render(request, 'belt_app/edit.html', context)
 
 def update(request, id):
