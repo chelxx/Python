@@ -13,7 +13,7 @@ def index(request):
     print ('THERE ARE NO MISTAKES HERE, JUST HAPPY LITTLE ACCIDENTS. WOMP WOMP!')
     return render(request, 'belt_app/index.html')
 
-def register(request): #YOU MIGHT WANT TO ADD SHIT HERE THAT'S ALSO IN LOG IN
+def register(request): #YOU MIGHT WANT TO ADD SHIT HERE
     print ('REGISTER VIEW')
     errors = User.objects.basic_validator(request.POST)
     if len(errors):
