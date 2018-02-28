@@ -31,7 +31,7 @@ class UserManager(models.Manager):
         #Email Validation
         if len(postData['email']) < 0:
             errors.append("Email must be filled out.")
-        if len(self.filter(email = postData['email'])) > 1:
+        if len(self.filter(email = postData['email'])):
             errors.append('Email address is already in use.')
         return errors
 

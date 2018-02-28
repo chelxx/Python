@@ -24,15 +24,16 @@ def register(request): #YOU MIGHT WANT TO ADD SHIT HERE
     else:
         print ('ELSE - REGISTER')
         user = User.objects.create(
-            first = request.POST['first'],
-            last = request.POST['last'],
-            email = request.POST['email'],
+            name = request.POST['name'],
+            username = request.POST['username'],
             password = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()),
-            birthday = request.POST['birthday'], 
+            date_hired = request.POST['date_hired'], 
         ) 
         request.session['user_id'] = user.id
+        item = Item.objects.all()
         context = {
-            'user' : user
+            'user' : user,
+            'item' : item,
         }
     return render(request, 'belt_app/success.html', context)
 
@@ -41,8 +42,8 @@ def login(request):
     errors = []
     try:
         print ('TRY - LOGIN')
-        u = User.objects.get(email=request.POST['email'])
-        if bcrypt.checkpw(request.POST['password'].encode(), (User.objects.filter(email=request.POST['email']))[0].password.encode()) == True:  
+        u = User.objects.get(username=request.POST['username'])
+        if bcrypt.checkpw(request.POST['password'].encode(), (User.objects.filter(username=request.POST['username']))[0].password.encode()) == True:  
             request.session['user_id'] = u.id 
             user = User.objects.get(id=u.id)
             return redirect('/success')
@@ -50,7 +51,7 @@ def login(request):
             errors.append('Invalid Password!')
     except:
         print ('EXCEPT - LOGIN')
-        errors.append('Email does not exist!')
+        errors.append('Username does not exist!')
     for error in errors:
         messages.error(request, error)
     return redirect('/')   
@@ -58,8 +59,12 @@ def login(request):
 def success(request):
     print('SUCCESS VIEW')
     user = User.objects.get(id=request.session['user_id'])
+    item = Item.objects.all().order_by('created_at')
+    wish = user.wishlist.all().order_by('created_at')
     context = {
         'user' : user,
+        'item' : item,
+        'wish' : wish,
     }
     return render(request, 'belt_app/success.html', context)
 
@@ -79,3 +84,56 @@ def logout(request):
     return redirect('/')
 
 #VIEWS FOR BELT EXAM HERE
+def add_item(request):
+    print('ADD ITEM FORM')
+    user = User.objects.get(id=request.session['user_id'])
+    context = {
+        'user' : user,
+    }
+    return render(request, 'belt_app/add.html', context)
+
+def create_item(request):
+    print('CREATE ITEM VIEW')
+    errors = Item.objects.item_validation(request.POST)
+    if len(errors):
+        for error in errors:
+            messages.error(request, error)
+        return redirect('/success')
+    else:
+        user = User.objects.get(id=request.session['user_id'])
+        print('ACTUALLY CREATING')
+        item = Item.objects.create(
+            item_name = request.POST['item_name'],
+            creator = user
+        ) 
+        return redirect('/success')
+
+def show_item(request, id):
+    print('SHOW ITEM VIEW')
+    user = User.objects.get(id=request.session['user_id'])
+    item = Item.objects.get(id=id)
+    context = {
+        'user' : user,
+        'item' : item,
+    }
+    return render(request, 'belt_app/show.html', context)
+
+def add_wish(request, id):
+    wish_item = Item.objects.filter(id=id)[0]
+    user = User.objects.get(id=request.session['user_id'])
+    wish_item.wishlist.add(user)
+    wish_item.save()
+    return redirect('/success')
+
+def remove_wish(request, id):
+    wish_item = Item.objects.filter(id=id)[0]
+    user = User.objects.get(id=request.session['user_id'])
+    wish_item.wishlist.remove(user)
+    wish_item.save()
+    return redirect('/success')
+
+def delete(request, id):
+    print('DELETE VIEW')
+    item = Item.objects.filter(id=id)
+    item.delete()
+    return redirect('/success')

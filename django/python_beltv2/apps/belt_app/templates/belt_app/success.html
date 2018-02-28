@@ -4,15 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HELLO, THERE!</title>
+    <title>WISHLIST HOME</title>
 </head>
 <body>
-    <h1>Welcome, {{ user.first }}!</h1>
+    <h1>Hello, {{ user.name }}!</h1>
     <form action="/logout" method="post">
         {% csrf_token %}
         <button>LOG OUT</button>
     </form>
-
+<!-- EXAM STUFF STARTS HERE -->
+    <h2>Your Wish List:</h2>
+    <table cellspacing="10">
+        <tr>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+        {% for item in item %}
+            {% if item.creator_id == user.id %}
+                <tr>
+                    <td><a href="/wish_item/{{ item.id }}">{{ item.item_name }}</a></td>
+                    {% if user.id == item.creator_id %}
+                        <td>{{ user.name }}</td>
+                    {% else %}
+                        <td>{{ item.creator_id }}</td>
+                    {% endif %}
+                    <td>{{ item.created_at }}</td>
+                    {% if user.id == item.creator_id %}
+                        <td><a href="/delete/{{ item.id }}">Delete!</a></td>
+                    {% else %}
+                        <td><a href="/add_wish/{{ item.id }}">Add to my Wishlist!</a></td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+        {% for wish in wish %}
+            <tr>
+                <td><a href="/wish_item/{{ wish.id }}">{{ wish.item_name }}</a></td>
+                {% if user.id == wish.creator_id %}
+                    <td>{{ user.name }}</td>
+                {% else %}
+                    <td>{{ wish.creator_id }}</td>
+                {% endif %}
+                <td>{{ wish.created_at }}</td>
+                {% if user.id == wish.creator_id %}
+                    <td><a href="/delete/{{ wish.id }}">Delete!</a></td>
+                {% else %}
+                    <td><a href="/remove_wish/{{ wish.id }}">Remove from my Wishlist!</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table><br><br>
+    <h2>Other Users' Wish List:</h2>
+    <table cellspacing="10">
+        <tr>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+        {% for item in item %}
+            <tr>
+                <td><a href="/wish_item/{{ item.id }}">{{ item.item_name }}</a></td>
+                {% if user.id == item.creator_id %}
+                    <td>{{ user.name }}</td>
+                {% else %}
+                    <td>{{ item.creator_id }}</td>
+                {% endif %}
+                <td>{{ item.created_at }}</td>
+                {% if user.id == item.creator_id %}
+                    <td><a href="/delete/{{ item.id }}">Delete!</a></td>
+                {% else %}
+                    <td><a href="/add_wish/{{ item.id }}">Add to my Wishlist!</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table><br><br>
+    <form action="/add">
+        {% csrf_token %}
+        <button>ADD ITEM</button>
+    </form>
+<!-- EXAM STUFF ENDS HERE -->
 <!-- ERRORS -->
     {% if messages %}
         <ul class="messages">
