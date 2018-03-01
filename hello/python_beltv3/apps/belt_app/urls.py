@@ -12,6 +12,10 @@ urlpatterns = [
     url(r'^success$', views.success),
 
     #BELT EXAM URLS HERE:
-    # url(r'^ ** $', views. ** ),
-    # url(r'^ ** /(?P<id>\d+)$', views. ** ),
+    url(r'^add_form$', views.add_form),
+    url(r'^add_trip$', views.add_trip),
+    url(r'^my_trip/(?P<id>\d+)$', views.my_trip),
+    url(r'^remove_my_trip/(?P<id>\d+)$', views.remove_my_trip),
+    url(r'^show_trip/(?P<id>\d+)$', views.show_trip),  
+    url(r'^delete/(?P<id>\d+)$', views.delete),
 ]

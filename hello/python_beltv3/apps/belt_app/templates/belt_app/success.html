@@ -7,13 +7,83 @@
     <title>BELT EXAM</title>
 </head>
 <body>
-    <h1>Welcome, {{ user.first }} {{ user.last }}!</h1>
+    <h1>Welcome, {{ user.name }}!</h1>
+    <h3>ID number: {{ user.id }}</h3>
     <form action="/logout" method="post">
         {% csrf_token %}
         <button>LOG OUT</button>
     </form>
 <!-- BELT EXAM STUFF STARTS HERE -->
-    
+<!-- MY TRIPS -->
+    <h2>My Trip Schedules:</h2>
+    <table cellspacing="10">
+        <tr>
+            <th>ID</th>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+            <th>Action</th>
+        </tr>
+    {% for all_trips in all_trips %}
+        {% if all_trips.creator_id == user.id %}
+            <tr>
+                <td>{{ all_trips.creator.name }}</td>
+                <td><a href="/show_trip/{{ all_trips.id }}">{{ all_trips.destination }}</a></td>
+                <td>{{ all_trips.trip_start }}</td>
+                <td>{{ all_trips.trip_end }}</td>
+                <td>{{ all_trips.description }}</td>
+                {% if user.id == all_trips.creator_id %}
+                    <td><a href="/delete/{{ all_trips.id }}">Delete!</a></td>
+                {% endif %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+    {% for my_trip in my_trip %}
+        <tr>
+            <td>{{ my_trip.creator.name }}</td>
+            <td><a href="/show_trip/{{ my_trip.id }}">{{ my_trip.destination }}</a></td>
+            <td>{{ my_trip.trip_start }}</td>
+            <td>{{ my_trip.trip_end }}</td>
+            <td>{{ my_trip.description }}</td>
+            {% if user.id == all_trips.creator_id %}
+                <td><a href="/remove_my_trip/{{ my_trip.id }}">Delete!</a></td>
+            {% else %}
+                <td><a href="/remove_my_trip/{{ my_trip.id }}">Leave Trip!</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </table>
+<!-- OTHER TABLE -->
+    <h2>Other Users' Travel Plans:</h2>
+    <table cellspacing="10">
+        <tr>
+            <th>ID</th>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+            <th>Action</th>
+        </tr>
+    {% for all_trips in all_trips %}
+        <tr>
+            <td>{{ all_trips.creator.name }}</a></td>
+            <td><a href="/show_trip/{{ all_trips.id }}">{{ all_trips.destination }}</a></td>
+            <td>{{ all_trips.trip_start }}</td>
+            <td>{{ all_trips.trip_end }}</td>
+            <td>{{ all_trips.description }}</td>
+            {% if user.id == all_trips.creator_id %}
+                <td><a href="/delete/{{ all_trips.id }}">Delete!</a></td>
+            {% else %}
+                <td><a href="/my_trip/{{ all_trips.id }}">Join Trip!</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </table>
+    <form action="/add_form" method="post">
+        {% csrf_token %}
+        <button>ADD TRAVEL PLAN</button>
+    </form>
 <!-- BELT EXAM STUFF ENDS HERE -->
 </body>
 </html>
