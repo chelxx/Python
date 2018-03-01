@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HELLO</title>
+</head>
+<body>
+
+    <h1>Welcome, {{ user.first }} {{ user.last }}!</h1>
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
+    <h2>Here are your appointments for <font color="green">today</font>, {% now "M. d, Y" %}:</h2>
+    <!-- TABLE HERE -->
+    <table cellspacing="10">
+        <tr>
+            <th>Tasks</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    <!-- TABLE FOR TODAY'S APPOINTMENTS -->
+        {% for appointment in appointment %} 
+            <tr>
+                <td>{{ appointment.apptask }}</td>
+                <td>{{ appointment.appdate }}</td>
+                <td>{{ appointment.apptime }}</td>
+                <td>{{ appointment.appstat }}</td>
+                {% if not appointment.appstat == 'Pending' %}
+                    <td>None</td>
+                {% else %}
+                    <td><a href="edit/{{ appointment.id }}">Edit</a>&ensp;<a href="delete/{{ appointment.id }}">Delete</a></td>
+                {% endif%}
+            </tr>
+        {% endfor %}
+        </table>
+        <br>
+        <br>
+        <h2>Your <font color="green">other</font> appointments: </h2>
+        <table cellspacing="10">
+            <tr>
+                <th>Tasks</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+<!-- TABLE FOR FUTURE APPOINTMENTS -->
+        {% for appointment1 in appointment1 %}
+            <tr>
+                <td>{{ appointment1.apptask }}</td>
+                <td>{{ appointment1.appdate }}</td>
+                <td>{{ appointment1.apptime }}</td>
+                <td>{{ appointment1.appstat }}</td>
+                {% if not appointment1.appstat == 'Pending' %}
+                    <td>None</td>
+                {% else %}
+                    <td><a href="edit/{{ appointment1.id }}">Edit</a>&ensp;<a href="delete/{{ appointment1.id }}">Delete</a></td>
+                {% endif%}            
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    <form action="/add" method="post">
+        {% csrf_token %}
+        Date: <input type="date" name="appdate"><br>
+        Time: <input type="time" name="apptime"><br>
+        Task: <input type="text" name="apptask"><br>
+        <button>ADD TASK</button><br><br>
+    </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><font color="red">{{ message }}</font></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
